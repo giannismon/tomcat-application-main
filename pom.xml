@@ -49,6 +49,13 @@
             <containerId>tomcat10x</containerId>
             <type>embedded</type>
           </container>
+          <configuration>
+            <type>runtime</type>
+            <properties>
+              <cargo.remote.username>admin</cargo.remote.username>
+              <cargo.remote.password>admin</cargo.remote.password>
+            </properties>
+          </configuration>
         </configuration>
       </plugin>
       <plugin>
