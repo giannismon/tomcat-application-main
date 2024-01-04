@@ -1,30 +1,33 @@
-#!/usr/bin/env groovy
-#################################################################
-@Library('pipeline-library-demo')_  //master or whatever branch
+pipeline {
+    agent any
 
-pipeline{
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
-      agent any
-      tools {
-           maven 'maven'
-           jdk 'java-17'
-       }
-        
-        stages{
-
-              stage('maven build'){
-                  steps{
-                      script{
-		    	                sh "mvn clean install"
-                      	  }
-               	     }  
-                 }	
-                 
-                 stage ('Check logs') {
-                    steps {
-                        filterLogs ('WARNING', 50)
-                    }
+        stage('Build') {
+            steps {
+                script {
+                    sh 'mvn clean install'
                 }
-		
-           }	       	     	         
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                    def tomcatHome = '/root/tomcat'  // Αντικατέστησε με το πραγματικό path του Tomcat
+
+                    sh "cp **/*.war $tomcatHome/webapps/"
+                    sh "$tomcatHome/bin/shutdown.sh"
+                    sh "$tomcatHome/bin/startup.sh"
+                }
+            }
+        }
+
+        // Άλλα στάδια προστίθενται εδώ
+    }
 }
