@@ -12,7 +12,7 @@ pipeline {
             }
             steps {
                 sh 'mvn clean install'
-                sh 'rm -rf helloworld*'
+                scp target/helloworld.war root@192.168.1.8:/root/apache-tomcat-9.0.70/webapps/
             }
         }
 
