@@ -8,6 +8,7 @@ pipeline {
             }
             steps {
                 sh 'cd git'
+                sh 'pwd'
                 sh 'mvn clean install'
             }
         }
