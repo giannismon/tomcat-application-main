@@ -1,29 +1,26 @@
 pipeline {
-    agent any
+    agent none
 
     stages {
-
-
         stage('Build') {
+            agent {
+                label 'master'
+            }
             steps {
-                script {
-                    sh 'mvn clean install'
-                }
+                sh 'mvn clean install'
             }
         }
 
         stage('Deploy to Tomcat') {
+            agent {
+                label 'dev'
+            }
             steps {
                 script {
-                    def tomcatHome = '/root/tomcat'  // Αντικατέστησε με το πραγματικό path του Tomcat
-
-                    sh "cp /var/lib/jenkins/workspace/tomcat/target/*.war $tomcatHome/webapps/"
-                    sh "$tomcatHome/bin/shutdown.sh"
-                    sh "$tomcatHome/bin/startup.sh"
+                    // Κάνε την απαραίτητη ενέργεια για να αντιγράψεις το αρχείο στον Tomcat
+                    sh "cp target/*.war /path/to/tomcat/webapps/"
                 }
             }
         }
-
-        // Άλλα στάδια προστίθενται εδώ
     }
 }
