@@ -21,7 +21,7 @@ pipeline {
                 script {
                     def tomcatHome = '/root/tomcat'  // Αντικατέστησε με το πραγματικό path του Tomcat
 
-                    sh "cp **/*.war $tomcatHome/webapps/"
+                    sh "cp /var/lib/jenkins/workspace/tomcat/target/*.war $tomcatHome/webapps/"
                     sh "$tomcatHome/bin/shutdown.sh"
                     sh "$tomcatHome/bin/startup.sh"
                 }
