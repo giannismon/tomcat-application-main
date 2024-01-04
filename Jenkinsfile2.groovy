@@ -7,7 +7,7 @@ pipeline {
                 label 'master'
             }
             steps {
-                sh 'pwd'
+                sh 'chown 777 *'
                 sh 'mvn clean install'
             }
         }
