@@ -7,8 +7,8 @@ pipeline {
                 label 'master'
             }
             steps {
-                sh 'chown 777 *'
-                sh 'mvn clean install'
+                sh 'sudo chown 777 *'
+                sh 'sudo mvn clean install'
             }
         }
 
