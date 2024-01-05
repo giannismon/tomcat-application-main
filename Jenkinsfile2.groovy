@@ -103,7 +103,7 @@ pipeline {
                 script {
                     def response = sh(script: "wget --spider -S http://192.168.1.8:8080/helloworld/ 2>&1 | grep 'HTTP/1.1 200'", returnStatus: true)
 
-                    if (response == true) {
+                    if (response == 'true') {
                         echo "Ping successful."
                     } else {
                         error "Failed to ping."
