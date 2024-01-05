@@ -12,7 +12,8 @@ pipeline {
             }
             steps {
                 sh 'mvn clean install'
-                stash name: 'buildResults', includes: '/var/lib/jenkins/workspace/git/target/helloworld.war' 
+                sh 'pwd'
+                stash name: 'buildResults', includes: '/git/target/helloworld.war' 
             }
         }
 
