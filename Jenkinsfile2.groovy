@@ -31,6 +31,7 @@ pipeline {
                 sh 'hostname'
                 sh 'pwd'
                 sh 'ls'
+                sh 'ls target'
                 stash includes : "*", name : "buildResults"
                 sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
                 sh 'ls /root/apache-tomcat-9.0.70/webapps/'
