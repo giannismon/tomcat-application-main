@@ -16,7 +16,7 @@ pipeline {
                 sh 'll /var/lib/jenkins/workspace/git'
                 sh "echo '##########################################################'"
 
-                stash name: 'buildResults', includes: '/target/helloworld.war' 
+                stash "*", "buildResults"
             }
         }
 
