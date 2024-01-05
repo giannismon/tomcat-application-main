@@ -32,11 +32,11 @@ pipeline {
                 sh 'hostname'
                 sh 'pwd'
                 sh 'rm -rf *'
-                sh 'ls target'
+                sh 'ls'
 
 
                 unstash 'buildResults'
-                sh 'ls'
+                sh 'ls target'
                 //sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
                 //sh 'ls /root/apache-tomcat-9.0.70/webapps/'
             }
