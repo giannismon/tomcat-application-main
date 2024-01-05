@@ -13,8 +13,9 @@ pipeline {
             steps {
                 sh 'mvn clean install'
                 sh 'pwd'
-                stash name: 'buildResults', includes: '/target/helloworld.war' 
                 sh "echo '##########################################################'"
+
+                stash name: 'buildResults', includes: '/target/helloworld.war' 
             }
         }
 
