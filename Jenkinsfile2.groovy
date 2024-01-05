@@ -21,11 +21,11 @@ pipeline {
                 label 'dev'
             }
             steps {
-                script {
-                    // Εκτελεί την εντολή SCP για τη μεταφορά του αρχείου .war
-                    unstash 'buildResults'
-                }
+                sh 'hostname'
+                sh 'pwd'
+                unstash 'buildResults'
             }
+
         }
     }
 }
