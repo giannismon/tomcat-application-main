@@ -13,7 +13,6 @@ pipeline {
             steps {
                 sh 'mvn clean install'
                 sh 'pwd'
-                sh 'll /var/lib/jenkins/workspace/git'
                 sh "echo '##########################################################'"
 
                 stash includes : "*", name : "buildResults"
