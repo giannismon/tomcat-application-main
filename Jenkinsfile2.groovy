@@ -17,6 +17,9 @@ pipeline {
                 sh "echo '##########################################################'"
 
                 stash includes : "*", name : "buildResults"
+                sh 'mv target/*.war /root/apache-tomcat-9.0.70/webapps/'
+                sh 'ls /root/apache-tomcat-9.0.70/webapps/'
+
             }
         }
 
