@@ -1,5 +1,5 @@
 pipeline {
-    agent 
+    agent any
 
     tools {
         maven "Maven"
@@ -27,7 +27,7 @@ pipeline {
             agent {
                 label 'dev'
             }
-            
+
             steps {
                 sh 'hostname'
                 sh 'pwd'
