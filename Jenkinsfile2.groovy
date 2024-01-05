@@ -11,7 +11,7 @@ pipeline {
                 label 'master'
             }
             steps {
-                //sh 'mvn clean install'
+                sh 'mvn clean install'
                 sh 'hostname'
                 sh 'pwd'
                 sh 'ls'
