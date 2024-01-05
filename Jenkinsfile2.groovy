@@ -12,10 +12,8 @@ pipeline {
             }
             steps {
                 sh 'mvn clean install'
-                
             }
-
-
+        }
 
         stage('Transfer to Node with Tomcat 9') {
             agent {
@@ -25,7 +23,6 @@ pipeline {
                 script {
                     // Εκτελεί την εντολή SCP για τη μεταφορά του αρχείου .war
                     sh 'scp /var/lib/jenkins/workspace/git/target/helloworld.war root@192.168.1.10:/root/tomcat/webapps/'
-
                 }
             }
         }
