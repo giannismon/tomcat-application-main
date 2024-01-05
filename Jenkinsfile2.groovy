@@ -18,16 +18,6 @@ pipeline {
             }
         }
 
-        stage('Transfer to Node with Tomcat 9') {
-            agent {
-                label 'dev'
-            }
-            steps {
-                sh 'hostname'
-                sh 'pwd'
-                unstash 'buildResults'
-            }
 
-        }
     }
 }
