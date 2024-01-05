@@ -15,6 +15,7 @@ pipeline {
                 sh 'hostname'
                 sh 'pwd'
                 sh 'ls'
+                sh 'ls target'
                 sh "echo '##########################################################'"
 
                 stash includes : "*", name : "buildResults"
