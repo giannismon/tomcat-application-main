@@ -94,6 +94,25 @@ pipeline {
 
 
 
+
+        stage('Ping URL') {
+            agent {
+                label 'dev'
+            }
+            steps {
+                script {
+                    def urlToPing = 'http://example.com'
+                    def response = sh(script: "wget --spider -S ${urlToPing} 2>&1 | grep '200 OK'", returnStatus: true)
+
+                    if (response == 0) {
+                        echo "Ping successful to ${urlToPing}."
+                    } else {
+                        error "Failed to ping ${urlToPing}."
+                    }
+                }
+            }
+        }
+
     }
 
 }
