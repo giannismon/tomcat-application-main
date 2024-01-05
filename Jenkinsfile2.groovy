@@ -32,8 +32,8 @@ pipeline {
                 sh 'hostname'
                 sh 'pwd'
                 sh 'ls'
-                stash includes : "*", name : "buildResults"
-                sh 'ls git@2/target'
+                unstash: "buildResults"
+                sh 'ls target'
                 sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
                 sh 'ls /root/apache-tomcat-9.0.70/webapps/'
             }
