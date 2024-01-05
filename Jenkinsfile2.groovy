@@ -18,7 +18,7 @@ pipeline {
                 sh 'ls target'
                 sh "echo '##########################################################'"
 
-                stash includes : "*", name : "buildResults"
+                stash includes: "target/**", name: "buildResults"
             }
         }
 
