@@ -101,8 +101,7 @@ pipeline {
             }
             steps {
                 script {
-                    def urlToPing = 'http://192.168.1.8:8080/helloworld/'
-                    def response = sh(script: "wget --spider -S ${urlToPing} 2>&1 | grep '200 OK'", returnStatus: true)
+                    def response = sh(script: "wget --spider -S http://192.168.1.8:8080/helloworld/ 2>&1 | grep '200'", returnStatus: true)
 
                     if (response == 0) {
                         echo "Ping successful to ${urlToPing}."
