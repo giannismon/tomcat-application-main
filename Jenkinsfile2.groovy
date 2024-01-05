@@ -52,9 +52,9 @@ pipeline {
             }
             steps {
                 sh "echo '##########################################################'"
-                sh '/root/apache-tomcat-9.0.70/bin/shutdown.sh'
+                sh 'systemctl stop tomcat'
                 sh 'sleep 5' // Περιμένει 5 δευτερόλεπτα
-                sh '/root/apache-tomcat-9.0.70/bin/startup.sh'
+                sh 'systemctl start tomcat'
                 sh "echo '##########################################################'"
 
             }
