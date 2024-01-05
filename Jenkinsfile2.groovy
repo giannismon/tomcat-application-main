@@ -76,10 +76,12 @@ pipeline {
                     } else {
                         error 'Tomcat process not found.'
                     }
+                }
             }
         }
 
 
 
     }
+
 }
