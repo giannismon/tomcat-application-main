@@ -37,8 +37,8 @@ pipeline {
 
                 unstash 'buildResults'
                 sh 'ls target'
-                //sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
-                //sh 'ls /root/apache-tomcat-9.0.70/webapps/'
+                sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
+                sh 'ls /root/apache-tomcat-9.0.70/webapps/'
             }
         }
 
