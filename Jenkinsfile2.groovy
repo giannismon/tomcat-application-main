@@ -31,7 +31,10 @@ pipeline {
             steps {
                 sh 'hostname'
                 sh 'pwd'
+                sh 'rm -rf *'
                 sh 'ls'
+
+
                 unstash 'buildResults'
                 sh 'ls target'
                 sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
