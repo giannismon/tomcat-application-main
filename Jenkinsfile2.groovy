@@ -12,18 +12,18 @@ pipeline {
             }
             steps {
                 sh 'mvn clean install'
+                stash name: 'buildResults', includes: '/var/lib/jenkins/workspace/git/target/helloworld.war' 
             }
         }
 
         stage('Transfer to Node with Tomcat 9') {
             agent {
-                label 'master'
+                label 'dev'
             }
             steps {
                 script {
-                      // Εκτελεί την εντολή SCP για τη μεταφορά του αρχείου .war
-                    sh 'scp -v /var/lib/jenkins/workspace/git/target/helloworld.war root@192.168.1.8:/root/apache-tomcat-9.0.70/webapps/'
-
+                    // Εκτελεί την εντολή SCP για τη μεταφορά του αρχείου .war
+                    unstash 'buildResults'
                 }
             }
         }
