@@ -22,9 +22,7 @@ pipeline {
             steps {
                 script {
                       // Εκτελεί την εντολή SCP για τη μεταφορά του αρχείου .war
-                    sh '''
-                        scp /var/lib/jenkins/workspace/git/target/helloworld.war root@192.168.1.10:/root/tomcat/webapps/
-                    '''
+                    sh 'scp /var/lib/jenkins/workspace/git/target/helloworld.war root@192.168.1.10:/root/tomcat/webapps/ -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o PasswordAuthentication=yes -o PubkeyAuthentication=no -P root'
                 }
             }
         }
