@@ -32,7 +32,7 @@ pipeline {
                 sh 'hostname'
                 sh 'pwd'
                 sh 'rm -rf *'
-                sh 'ls'
+                sh 'ls target'
 
 
                 unstash 'buildResults'
