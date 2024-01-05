@@ -21,8 +21,11 @@ pipeline {
             }
             steps {
                 script {
-                    // Εκτελεί την εντολή SCP για τη μεταφορά του αρχείου .war
-                    sh 'scp /var/lib/jenkins/workspace/git/target/helloworld.war root@192.168.1.10:/root/tomcat/webapps/'
+                      // Εκτελεί την εντολή SCP για τη μεταφορά του αρχείου .war
+                    sh '''
+                        ssh-keyscan -H 192.168.1.10 >> ~/.ssh/known_hosts
+                        scp /var/lib/jenkins/workspace/git/target/helloworld.war root@192.168.1.10:/root/tomcat/webapps/
+                    '''
                 }
             }
         }
