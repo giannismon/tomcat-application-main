@@ -11,7 +11,7 @@ pipeline {
                 label 'master'
             }
             steps {
-
+                sh "echo '##########################################################'"
                 sh 'mvn clean install'
                 sh 'hostname'
                 sh 'pwd'
@@ -30,14 +30,18 @@ pipeline {
                 label 'dev'
             }
             steps {
+                sh "echo '##########################################################'"
                 sh 'hostname'
                 sh 'pwd'
                 cleanWs()
                 sh 'ls'
                 unstash 'buildResults'
                 sh 'ls target'
+                sh 'rm -rf /root/apache-tomcat-9.0.70/webapps/helloworld*'
                 sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
                 sh 'ls /root/apache-tomcat-9.0.70/webapps/'
+                sh "echo '##########################################################'"
+
             }
         }
 
@@ -47,9 +51,12 @@ pipeline {
                 label 'dev'
             }
             steps {
+                sh "echo '##########################################################'"
                 sh '/root/apache-tomcat-9.0.70/bin/shutdown.sh'
                 sh 'sleep 5' // Περιμένει 5 δευτερόλεπτα
                 sh '/root/apache-tomcat-9.0.70/bin/startup.sh'
+                sh "echo '##########################################################'"
+
             }
         }
 
@@ -60,6 +67,9 @@ pipeline {
             }
             steps {
                 script {
+                    sh "echo '##########################################################'"
+
+
                     def tomcatProcess = sh(script: 'ps aux | grep "[t]omcat"', returnStatus: true)
 
                     if (tomcatProcess == 0) {
@@ -73,6 +83,8 @@ pipeline {
                         } else {
                             error 'Process found, but it may not be Tomcat.'
                         }
+                    sh "echo '##########################################################'"
+
                     } else {
                         error 'Tomcat process not found.'
                     }
