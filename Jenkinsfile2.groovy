@@ -1,4 +1,5 @@
 pipeline {
+    agent 
 
     tools {
         maven "Maven"
@@ -22,11 +23,11 @@ pipeline {
         }
 
 
-
         stage('tomcat') {
             agent {
                 label 'dev'
             }
+            
             steps {
                 sh 'hostname'
                 sh 'pwd'
