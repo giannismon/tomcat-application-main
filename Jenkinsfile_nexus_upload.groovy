@@ -29,7 +29,6 @@ pipeline {
             }
         }
 
-    stages {
         stage('Build') {
             agent {
                 label 'master'
@@ -43,10 +42,8 @@ pipeline {
                 sh 'ls target'
                 sh "echo '##########################################################'"
 
-                stash includes: "target/**", name: "buildResults"
             }
         }
-
 
         stage("publish to nexus") {
             steps {
