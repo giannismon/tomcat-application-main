@@ -26,7 +26,21 @@ pipeline {
 
     stages {
 
+        stage('Verify Environment') {
+            steps {
+                script {
+                    echo "NEXUS_VERSION: ${NEXUS_VERSION}"
+                    echo "NEXUS_PROTOCOL: ${NEXUS_PROTOCOL}"
+                    echo "NEXUS_URL: ${NEXUS_URL}"
+                    echo "NEXUS_REPOSITORY: ${NEXUS_REPOSITORY}"
+                    echo "NEXUS_CREDENTIAL_ID: ${NEXUS_CREDENTIAL_ID}"
+                    echo "ARTIFACT_VERSION: ${ARTIFACT_VERSION}"
+                }
+            }
+        }
 
+
+        
         stage("Check out") {
             agent {
                 label 'master'
