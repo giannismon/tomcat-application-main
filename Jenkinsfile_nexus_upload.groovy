@@ -29,13 +29,24 @@ pipeline {
             }
         }
 
-        stage("mvn build") {
+    stages {
+        stage('Build') {
+            agent {
+                label 'master'
+            }
             steps {
-                script {
-                    sh "mvn clean package"
-                }
+                sh "echo '##########################################################'"
+                sh 'mvn clean install'
+                sh 'hostname'
+                sh 'pwd'
+                sh 'ls'
+                sh 'ls target'
+                sh "echo '##########################################################'"
+
+                stash includes: "target/**", name: "buildResults"
             }
         }
+
 
         stage("publish to nexus") {
             steps {
