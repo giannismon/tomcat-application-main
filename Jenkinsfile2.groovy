@@ -14,7 +14,7 @@ pipeline {
         // Where your Nexus is running
         NEXUS_URL = "192.168.1.99:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "http://192.168.1.99:8081/repository/LoginWebApp/"
+        NEXUS_REPOSITORY = "http://192.168.1.99:8081/service/rest/repository/browse/LoginWebApp/"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus"
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
