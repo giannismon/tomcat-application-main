@@ -16,8 +16,7 @@ pipeline {
         // Repository where we will upload the artifact
         NEXUS_REPOSITORY = "LoginWebApp"
         // Jenkins credential id to authenticate to Nexus OSS
-        username: admin,
-        password: admin,
+        NEXUS_CREDENTIAL_ID = "nexus"
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
     }
 
@@ -41,7 +40,7 @@ pipeline {
         }
 
 
-
+        
         stage("Check out") {
             agent {
                 label 'master'
