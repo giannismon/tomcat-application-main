@@ -21,7 +21,12 @@ pipeline {
     }
 
 
+
+
+
     stages {
+
+
         stage("Check out") {
             agent {
                 label 'master'
@@ -35,7 +40,7 @@ pipeline {
 
 
 
-    stages {
+
         stage('Build') {
             agent {
                 label 'master'
