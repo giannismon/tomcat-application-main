@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent master
 
     tools {
         maven "Maven"
