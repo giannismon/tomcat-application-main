@@ -12,12 +12,7 @@ pipeline {
             }
             steps {
                 sh "echo '##########################################################'"
-                sh 'mvn clean install'
-                sh 'hostname'
-                sh 'pwd'
-                sh 'ls'
-                sh 'ls target'
-                sh "echo '##########################################################'"
+                sh 'mvn clean package'
 
             }
         }
