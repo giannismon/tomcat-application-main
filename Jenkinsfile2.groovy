@@ -13,7 +13,7 @@ pipeline {
         // Where your Nexus is running
         NEXUS_URL = "192.168.1.99:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "LoginWebApp"
+        NEXUS_REPOSITORY = "maven-snapshots"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus"
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
@@ -73,7 +73,7 @@ pipeline {
                             nexusUrl: '192.168.1.99:8081',
                             groupId: 'org.junit.jupiter',
                             version: '1.0-SNAPSHOT',
-                            repository: 'LoginWebApp',
+                            repository: 'maven-snapshots',
                             credentialsId: 'nexus',
                             artifacts: [
                                 [artifactId: 'helloworld',
