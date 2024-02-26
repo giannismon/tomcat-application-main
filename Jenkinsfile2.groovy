@@ -8,6 +8,9 @@ pipeline {
 
 
     stages {
+
+
+
         stage("Check out") {
             steps {
                 script {
@@ -17,7 +20,7 @@ pipeline {
         }
 
 
-    stages {
+
         stage('Build') {
             agent {
                 label 'master'
@@ -28,7 +31,6 @@ pipeline {
 
             }
         }
-
 
 
     }
