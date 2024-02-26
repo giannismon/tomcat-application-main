@@ -70,8 +70,8 @@ pipeline {
                                 type: pom.packaging],
                                 [artifactId: 'helloworld',
                                 classifier: '',
-                                file: "pom.xml",
-                                type: "pom"]
+                                file: "target/*.war",
+                                type: "war"]
                             ]
                         );
                     } else {
