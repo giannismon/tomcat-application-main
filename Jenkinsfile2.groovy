@@ -5,6 +5,18 @@ pipeline {
         maven "Maven"
     }
 
+
+
+    stages {
+        stage("Check out") {
+            steps {
+                script {
+                    git branch: 'master', url: 'https://github.com/giannismon/tomcat-application-main.git';
+                }
+            }
+        }
+
+
     stages {
         stage('Build') {
             agent {
