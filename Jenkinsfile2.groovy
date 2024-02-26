@@ -70,7 +70,7 @@ pipeline {
                                 type: pom.packaging],
                                 [artifactId: 'helloworld',
                                 classifier: '',
-                                file: "target/*.war",
+                                file: "target/helloworld.war",
                                 type: "war"]
                             ]
                         );
