@@ -5,83 +5,112 @@ pipeline {
         maven "Maven"
     }
 
-    environment {
-        // This can be nexus3 or nexus2
-        NEXUS_VERSION = "nexus3"
-        // This can be http or https
-        NEXUS_PROTOCOL = "http"
-        // Where your Nexus is running
-        NEXUS_URL = "192.168.1.99:8081"
-        // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "maven-snapshots"
-        // Jenkins credential id to authenticate to Nexus OSS
-        NEXUS_CREDENTIAL_ID = "nexus"
-        ARTIFACT_VERSION = "${BUILD_NUMBER}"
-    }
-
-
-
-
-
     stages {
-
-
-
-
         stage('Build') {
             agent {
                 label 'master'
             }
             steps {
                 sh "echo '##########################################################'"
-                sh 'mvn clean package'
+                sh 'mvn clean install'
+                sh 'hostname'
+                sh 'pwd'
+                sh 'ls'
+                sh 'ls target'
+                sh "echo '##########################################################'"
 
+                stash includes: "target/**", name: "buildResults"
             }
         }
 
 
 
-
-        stage("Publish to Nexus Repository Manager") {
+        stage('Deploy tomcat') {
             agent {
-                label 'master'
+                label 'dev'
+            }
+            steps {
+                sh "echo '##########################################################'"
+                sh 'hostname'
+                sh 'pwd'
+                cleanWs()
+                sh 'ls'
+                unstash 'buildResults'
+                sh 'ls target'
+                sh 'rm -rf /root/apache-tomcat-9.0.70/webapps/helloworld*'
+                sh 'mv **/*.war /root/apache-tomcat-9.0.70/webapps/'
+                sh 'ls /root/apache-tomcat-9.0.70/webapps/'
+                sh "echo '##########################################################'"
+
+            }
+        }
+
+
+        stage('Restart tomcat') {
+            agent {
+                label 'dev'
+            }
+            steps {
+                sh "echo '##########################################################'"
+                sh 'systemctl stop tomcat'
+                sh 'sleep 5' // Περιμένει 5 δευτερόλεπτα
+                sh 'systemctl start tomcat'
+                sh "echo '##########################################################'"
+
+            }
+        }
+
+
+        stage('Check Tomcat Status') {
+            agent {
+                label 'dev'
             }
             steps {
                 script {
-                    pom = readMavenPom file: "pom.xml";
-                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-                    artifactPath = filesByGlob[0].path;
-                    artifactExists = fileExists artifactPath;
-                    if(artifactExists) {
-                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
-                        nexusArtifactUploader(
-                            nexusVersion: 'nexus3',
-                            protocol: 'http',
-                            nexusUrl: '192.168.1.99:8081',
-                            groupId: 'org.junit.jupiter',
-                            version: '1.0-SNAPSHOT',
-                            repository: 'maven-snapshots',
-                            credentialsId: 'nexus',
-                            artifacts: [
-                                [artifactId: 'helloworld',
-                                classifier: '',
-                                file: artifactPath,
-                                type: pom.packaging],
-                                [artifactId: 'helloworld',
-                                classifier: '',
-                                file: "target/helloworld.war",
-                                type: "war"]
-                            ]
-                        );
+                    sh "echo '##########################################################'"
+
+
+                    def tomcatProcess = sh(script: 'ps aux | grep "[t]omcat"', returnStatus: true)
+
+                    if (tomcatProcess == 0) {
+                        echo 'Tomcat process found. Checking if it is actually Tomcat...'
+
+                        // Check if the process is really Tomcat
+                        def isTomcat = sh(script: 'ps aux | grep "[t]omcat" | grep "catalina.base"', returnStatus: true)
+
+                        if (isTomcat == 0) {
+                            echo 'Tomcat is running.'
+                        } else {
+                            error 'Process found, but it may not be Tomcat.'
+                        }
+                    sh "echo '##########################################################'"
+
                     } else {
-                        error "*** File: ${artifactPath}, could not be found";
+                        error 'Tomcat process not found.'
                     }
                 }
             }
         }
 
 
+
+
+        stage('Ping URL') {
+            agent {
+                label 'dev'
+            }
+            steps {
+                script {
+                    def response = sh(script: "wget --spider -S http://192.168.1.8:8080/helloworld/ 2>&1 | grep 'HTTP/1.1 200'", returnStatus: true)
+
+                    if (response == 0) {
+                        echo "Ping successful."
+                    } else {
+                        error "Failed to ping."
+                    }
+                }
+            }
+        }
 
     }
 
